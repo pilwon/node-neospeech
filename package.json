@@ -1,6 +1,6 @@
 {
   "name": "neospeech",
-  "description": "NeoSpeech client library for Node.js",
+  "description": "NeoSpeech TTS client library for Node.js",
   "version": "0.1.0",
   "license": "MIT",
   "author": {
