@@ -1,0 +1,41 @@
+{
+  "name": "neospeech",
+  "description": "NeoSpeech client library for Node.js",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "Pilwon Huh",
+    "email": "pilwon@gmail.com"
+  },
+  "homepage": "https://github.com/pilwon/node-neospeech",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pilwon/node-neospeech.git"
+  },
+  "keywords": [
+    "neospeech",
+    "tts",
+    "text-to-speech",
+    "speech",
+    "client",
+    "library"
+  ],
+  "dependencies": {
+    "colors": "~0.6.0-1",
+    "lodash": "~1.3.1"
+  },
+  "devDependencies": {
+    "chai": "~1.5.0",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-mocha-test": "~0.2.2",
+    "grunt-regarde": "~0.1.1",
+    "matchdep": "~0.1.2",
+    "mocha": "~1.8.2",
+    "node-gyp": "~0.10.0"
+  },
+  "scripts": {
+    "prepublish": "npm prune",
+    "test": "grunt test"
+  }
+}
