@@ -159,10 +159,6 @@ struct TTSRequestStatus_Baton {
   int result;
 };
 
-v8::Handle<v8::Value> Async(const v8::Arguments& args);
-void AsyncWork(uv_work_t* req);
-void AsyncAfter(uv_work_t* req);
-
 v8::Handle<v8::Value> TTSRequestFile(const v8::Arguments& args);
 void TTSRequestFile_Work(uv_work_t* req);
 void TTSRequestFile_After(uv_work_t* req);
