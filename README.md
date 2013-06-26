@@ -2,6 +2,14 @@
 
 `neospeech` is a client library for [NeoSpeech TTS](http://neospeech.com/) written in [Node.js](http://nodejs.org/).
 
+## Dependencies
+
+- `ffmpeg`
+- `libmp3lame` for mp3
+- `libvorbis` for ogg
+
+Refer to [Installing FFmpeg](#installing-ffmpeg) section for more details.
+
 ## Installation
 
     $ npm install neospeech
@@ -20,34 +28,32 @@ var neospeech = new (require('neospeech'))({
 #### Convenience Functions
 
 ```js
-neospeech.bridget(text, outPath, function (err, result) {});
-neospeech.hui(text, outPath, function (err, result) {});
-neospeech.julie(text, outPath, function (err, result) {});
-neospeech.junwoo(text, outPath, function (err, result) {});
-neospeech.kate(text, outPath, function (err, result) {});
-neospeech.liang(text, outPath, function (err, result) {});
-neospeech.misaki(text, outPath, function (err, result) {});
-neospeech.paul(text, outPath, function (err, result) {});
-neospeech.show(text, outPath, function (err, result) {});
-neospeech.violeta(text, outPath, function (err, result) {});
-neospeech.yumi(text, outPath, function (err, result) {});
+neospeech.bridget(TEXT, OUT_PATH, function (err, result) {});
+neospeech.hui(TEXT, OUT_PATH, function (err, result) {});
+neospeech.julie(TEXT, OUT_PATH, function (err, result) {});
+neospeech.junwoo(TEXT, OUT_PATH, function (err, result) {});
+neospeech.kate(TEXT, OUT_PATH, function (err, result) {});
+neospeech.liang(TEXT, OUT_PATH, function (err, result) {});
+neospeech.misaki(TEXT, OUT_PATH, function (err, result) {});
+neospeech.paul(TEXT, OUT_PATH, function (err, result) {});
+neospeech.show(TEXT, OUT_PATH, function (err, result) {});
+neospeech.violeta(TEXT, OUT_PATH, function (err, result) {});
+neospeech.yumi(TEXT, OUT_PATH, function (err, result) {});
 ```
 
 #### Request Buffer
 
 ```js
 neospeech.requestBuffer({
-  text: TEXT,
-  speakerId: SPEAKER_ID,
-  voiceFormat: VOICE_FORMAT,
-  first: FIRST,
-  all: ALL,
-  sockfd: SOCKFD
+  text: TEXT,                 // default: ''
+  speakerId: SPEAKER_ID,      // default: 'JULIE'
+  voiceFormat: VOICE_FORMAT,  // default: 'DEFAULT'
+  all: ALL                    // default: true, required: voiceFormat='PCM','MULAW','ALAW'
 }, function (err, result) {
   // result.code
   // result.message
-  // result.buffer
-  // result.sockfd
+  // result.buffer (if value exists)
+  // result.sockfd (if value exists)
 });
 ```
 
@@ -55,22 +61,20 @@ neospeech.requestBuffer({
 
 ```js
 neospeech.requestBufferEx({
-  text: TEXT,
-  speakerId: SPEAKER_ID,
-  voiceFormat: VOICE_FORMAT,
-  textFormat: TEXT_FORMAT,
-  volume: VOLUME,
-  speed: SPEED,
-  pitch: PITCH,
-  dictNum: DICT_NUM,
-  first: FIRST,
-  all: ALL,
-  sockfd: SOCKFD
+  text: TEXT,                 // default: ''
+  speakerId: SPEAKER_ID,      // default: 'JULIE'
+  voiceFormat: VOICE_FORMAT,  // default: 'DEFAULT'
+  textFormat: TEXT_FORMAT,    // default: 'NORMAL'
+  volume: VOLUME,             // default: 100, valid: 0-500
+  speed: SPEED,               // default: 100, valid: 50-400
+  pitch: PITCH,               // default: 100, valid: 50-200
+  dictNum: DICT_NUM,          // default: 1
+  all: ALL                    // default: true, required: voiceFormat='PCM','MULAW','ALAW'
 }, function (err, result) {
   // result.code
   // result.message
-  // result.buffer
-  // result.sockfd
+  // result.buffer (if value exists)
+  // result.sockfd (if value exists)
 });
 ```
 
@@ -78,21 +82,19 @@ neospeech.requestBufferEx({
 
 ```js
 neospeech.requestBufferSSMLEx({
-  text: TEXT,
-  speakerId: SPEAKER_ID,
-  voiceFormat: VOICE_FORMAT,
-  volume: VOLUME,
-  speed: SPEED,
-  pitch: PITCH,
-  dictNum: DICT_NUM,
-  first: FIRST,
-  sockfd: SOCKFD
+  text: TEXT,                 // default: ''
+  speakerId: SPEAKER_ID,      // default: 'JULIE'
+  voiceFormat: VOICE_FORMAT,  // default: 'PCM', valid: 'PCM','MULAW','ALAW'
+  volume: VOLUME,             // default: 100, valid: 0-500
+  speed: SPEED,               // default: 100, valid: 50-400
+  pitch: PITCH,               // default: 100, valid: 50-200
+  dictNum: DICT_NUM           // default: 1
 }, function (err, result) {
   // result.code
   // result.message
   // result.marks
-  // result.buffer
-  // result.sockfd
+  // result.buffer (if value exists)
+  // result.sockfd (if value exists)
 });
 ```
 
@@ -100,10 +102,10 @@ neospeech.requestBufferSSMLEx({
 
 ```js
 neospeech.requestFile({
-  text: TEXT,
-  outPath: OUT_PATH,
-  speakerId: SPEAKER_ID,
-  voiceFormat: VOICE_FORMAT
+  text: TEXT,                // default: ''
+  outPath: OUT_PATH,         // default: 'out'
+  speakerId: SPEAKER_ID,     // default: 'JULIE'
+  voiceFormat: VOICE_FORMAT  // default: 'DEFAULT'
 }, function (err, result) {
   // result.code
   // result.message
@@ -114,15 +116,15 @@ neospeech.requestFile({
 
 ```js
 neospeech.requestFileEx({
-  text: TEXT,
-  outPath: OUT_PATH,
-  speakerId: SPEAKER_ID,
-  voiceFormat: VOICE_FORMAT,
-  textFormat: TEXT_FORMAT,
-  volume: VOLUME,
-  speed: SPEED,
-  pitch: PITCH,
-  dictNum: DICT_NUM
+  text: TEXT,                 // default: ''
+  outPath: OUT_PATH,          // default: 'out'
+  speakerId: SPEAKER_ID,      // default: 'JULIE'
+  voiceFormat: VOICE_FORMAT,  // default: 'DEFAULT'
+  textFormat: TEXT_FORMAT,    // default: 'NORMAL'
+  volume: VOLUME,             // default: 100, valid: 0-500
+  speed: SPEED,               // default: 100, valid: 50-400
+  pitch: PITCH,               // default: 100, valid: 50-200
+  dictNum: DICT_NUM           // default: 1
 }, function (err, result) {
   // result.code
   // result.message
@@ -133,10 +135,10 @@ neospeech.requestFileEx({
 
 ```js
 neospeech.requestFileSSML({
-  text: TEXT,
-  outPath: OUT_PATH,
-  speakerId: SPEAKER_ID,
-  voiceFormat: VOICE_FORMAT
+  text: TEXT,                // default: ''
+  outPath: OUT_PATH,         // default: 'out'
+  speakerId: SPEAKER_ID,     // default: 'JULIE'
+  voiceFormat: VOICE_FORMAT  // default: 'DEFAULT'
 }, function (err, result) {
   // result.code
   // result.message
@@ -156,18 +158,79 @@ neospeech.requestStatus(function (err, result) {
 
 ## Development
 
-### Dependencies
+### Compiling C++ Binding
 
-The following library dependencies are only required for running the example code.
+    $ node-gyp configure && node-gyp build
 
-    $ aptitude install ffmpeg libavcodec-extra-52
-    $ aptitude install lame vorbis-tools
-    $ aptitude install libmp3lame-dev libmpg123-dev
+### Installing [FFmpeg](http://www.ffmpeg.org/)
 
-### Building binding
+#### Ubuntu
 
-    $ node-gyp configure
-    $ node-gyp install
+    $ apt-get install ffmpeg libavcodec-extra-52
+    $ apt-get install lame vorbis-tools
+    $ apt-get install libmp3lame-dev libmpg123-dev
+
+#### Amazon Linux / Cent OS
+
+- [Compiling FFmpeg on Amazon Linux](http://ffmpeg.org/trac/ffmpeg/wiki/CentosCompilationGuide)
+- [Installing ffmpeg on Amazon Linux 2013.03](http://www.chipnick.com/blog/2013/04/08/installing-ffmpeg-on-amazon-linux-2013-03/)
+
+```sh
+yum install autoconf automake gcc gcc-c++ git libtool make nasm pkgconfig zlib-devel
+mkdir ~/ffmpeg_src
+
+# yasm
+yum install yasm
+
+# libfdk_aac
+cd ~/ffmpeg_src
+git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git
+cd fdk-aac
+autoreconf -fiv
+./configure --disable-shared
+make
+make install
+make distclean
+
+# libmp3lame
+cd ~/ffmpeg_src
+curl -L -O http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+tar xzvf lame-3.99.5.tar.gz
+cd lame-3.99.5
+./configure --disable-shared --enable-nasm
+make
+make install
+make distclean
+
+# libogg
+cd ~/ffmpeg_src
+curl -O http://downloads.xiph.org/releases/ogg/libogg-1.3.1.tar.gz
+tar xzvf libogg-1.3.1.tar.gz
+cd libogg-1.3.1
+./configure --disable-shared
+make
+make install
+make distclean
+
+# libvorbis
+cd ~/ffmpeg_src
+curl -O http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.gz
+tar xzvf libvorbis-1.3.3.tar.gz
+cd libvorbis-1.3.3
+./configure --disable-shared
+make
+make install
+make distclean
+
+# ffmpeg
+cd ~/ffmpeg_src
+git clone --depth 1 git://source.ffmpeg.org/ffmpeg
+cd ffmpeg
+./configure --enable-gpl --enable-nonfree --enable-pthreads --enable-postproc --enable-libfdk_aac --enable-libmp3lame --enable-libvorbis --enable-filters --enable-runtime-cpudetect
+make
+make install
+make distclean
+```
 
 ## Credits
 
